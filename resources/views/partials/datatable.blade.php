@@ -6,10 +6,9 @@
   @foreach ($data['database'] as $index => $item)
   <tr>
       <td>{{ $index + $data['database']->firstItem() }}</td>
-      {{-- <td>#</td> --}}
-      <td>{{ $item->nama }}</td>
-      <td>{{ $item->umur }}</td>
-      <td>{{ $item->pekerjaan }}</td>
+      <td>{{ $item->kecamatan }}</td>
+      <td>{{ $item->kelurahan }}</td>
+      <td>{{ $item->jumlah }}</td>
       <td>{{ $item->tahun }}</td>
       <td>{{ $item->bulan }}</td>
   </tr>

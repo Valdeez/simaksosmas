@@ -10,7 +10,7 @@
       <div class="d-flex">
         <form action="" class="d-flex" id="select">
           <div class="form-group m-0 mr-2">
-            <select class="selectpicker" data-style="btn-orange text-white shadow-none" data-width="200px" name="selectBulan" id="selectBulan">
+            <select class="selectpicker" data-style="btn-orange text-white shadow-none mr-5" data-width="fit" name="selectBulan" id="selectBulan">
               <option value="" disabled {{ ($data['bulan'] == '') ? 'selected' : '' }}>Pilih bulan</option>
               <option value="01" {{ ($data['bulan'] == '01') ? 'selected' : '' }}>Januari</option>
               <option value="02" {{ ($data['bulan'] == '02') ? 'selected' : '' }}>Februari</option>
@@ -27,7 +27,7 @@
             </select>
           </div>
           <div class="form-group m-0 mr-2">
-            <select class="selectpicker" data-style="btn-orange text-white shadow-none" data-width="200px" name="selectTahun" id="selectTahun">
+            <select class="selectpicker" data-style="btn-orange text-white shadow-none mr-5" data-width="fit" name="selectTahun" id="selectTahun">
               <option value="" disabled {{ ($data['tahun'] == '') ? 'selected' : '' }}>Pilih tahun</option>
               <option value="2023" {{ ($data['tahun'] == '2023') ? 'selected' : '' }}>2023</option>
               <option value="2024" {{ ($data['tahun'] == '2024') ? 'selected' : '' }}>2024</option>
@@ -82,18 +82,21 @@
           Menampilkan data pada bulan {{ $data['namaBulan'] }} {{ $data['tahun'] }}
           @endif
         </div>
-        <div class="d-flex">
-          <label for="searchData" class="align-self-center m-0 mr-2">Cari:</label>
-          <input type="text" class="form-control px-2" id="searchData" name="searchData" style="max-height: 30px" {{ ($data['tahun'] == '') ? 'disabled' : '' }}>
-        </div>
+        <form action="/{{ $data['page'] }}/{{ $data['tahun'] }}/{{ $data['bulan'] }}/search" method="GET" id="searchForm">
+          @csrf
+          <div class="d-flex">
+            <label for="searchData" class="align-self-center m-0 mr-2">Cari:</label>
+            <input type="text" class="form-control px-2" id="searchData" name="searchData" style="max-height: 30px" {{ ($data['tahun'] == '') ? 'disabled' : '' }}>
+          </div>
+        </form>
       </div>
       <table id="datatable" class="table table-striped table-bordered rounded" style="width:100%">  
           <thead class="thead-dark">
               <tr>
                   <th>#</th>
-                  <th>Nama</th>
-                  <th>Umur</th>
-                  <th>Pekerjaan</th>
+                  <th>Kecamatan</th>
+                  <th>Desa/Kelurahan</th>
+                  <th>Jumlah</th>
                   <th>Tahun</th>
                   <th>Bulan</th>
               </tr>
@@ -102,7 +105,7 @@
             @include('partials.datatable')
           </tbody>
       </table>
-      {{ $data['database']->links('partials.pagination') }}
+      {{ $data['database']->onEachSide(1)->links('partials.pagination') }}
     </div>
   </section>
 @endsection

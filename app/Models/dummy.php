@@ -12,9 +12,9 @@ class dummy extends Model
     protected $table = 'dummy';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nama',
-        'umur',
-        'pekerjaan',
+        'kecamatan',
+        'kelurahan',
+        'jumlah',
         'tahun',
         'bulan'
     ];

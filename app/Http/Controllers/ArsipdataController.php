@@ -18,7 +18,7 @@ class ArsipdataController extends BaseController
         $tahun = '';
         $bulan = '';
         $namaBulan = '';
-        $dummyDB = dummy::orderBy('created_at', 'desc')->paginate(10);
+        $dummyDB = dummy::orderBy('kecamatan', 'asc')->paginate(20);
         $data = [
             'page' => 'petadata',
             'database' => $dummyDB,
@@ -30,7 +30,7 @@ class ArsipdataController extends BaseController
     }
 
     public function select($tahun, $bulan) {
-        $dummyDB = dummy::where('tahun', $tahun)->where('bulan', $bulan)->paginate(10);
+        $dummyDB = dummy::where('tahun', $tahun)->where('bulan', $bulan)->paginate(20);
         $listBulan = [
             '01' => 'Januari',
             '02' => 'Februari',
@@ -53,7 +53,6 @@ class ArsipdataController extends BaseController
             'bulan' => $bulan,
             'namaBulan' => $namaBulan
         ];
-
         return view('petadata', compact('data'));
     }
 
@@ -73,15 +72,15 @@ class ArsipdataController extends BaseController
             '12' => 'Desember',
         ];
         $namaBulan = $listBulan[$bulan];
-        $keyword = $request->keyword;
+        $keyword = $request->string('searchData');
         $dummyDB = dummy::where('tahun', $tahun)->where('bulan', $bulan)
         ->where(function($query) use($keyword){
-            $query->where('nama', 'like', '%'.$keyword.'%')
-                ->orWhere('umur', 'like', '%'.$keyword.'%')
-                ->orWhere('pekerjaan', 'like', '%'.$keyword.'%');
+            $query->where('kecamatan', 'like', '%'.$keyword.'%')
+                ->orWhere('kelurahan', 'like', '%'.$keyword.'%')
+                ->orWhere('jumlah', 'like', '%'.$keyword.'%');
         })
-        ->orderBy('created_at', 'desc')
-        ->paginate(10);
+        ->orderBy('kecamatan', 'asc')
+        ->paginate(20)->withQueryString();
         $data = [
             'page' => 'petadata',
             'database' => $dummyDB,
@@ -89,8 +88,7 @@ class ArsipdataController extends BaseController
             'bulan' => $bulan,
             'namaBulan' => $namaBulan
         ];
-
-        $output = view('partials.datatable', compact('data'));
+        $output = view('petadata', compact('data'));
         return $output;
     }
 

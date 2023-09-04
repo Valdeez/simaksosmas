@@ -165,19 +165,26 @@ $('#select').on('change', function(){
   }
 });
 
+// $('#searchData').on('keyup', function(e){
+//   var url = $(location).attr('href')
+//   var parts = url.split("/")
+//   var second_part = parts[parts.length-2];
+//   var last_part = parts[parts.length-1];
+//   e.preventDefault();
+//   let keyword = $('#searchData').val();
+//   $.ajax({
+//     url:"/petadata/"+second_part+"/"+last_part+"/search",
+//     method:"GET",
+//     data:{keyword:keyword},
+//     success:function(res){
+//       $('#output').html(res);
+//     }
+//   })
+// });
+
 $('#searchData').on('keyup', function(e){
-  var url = $(location).attr('href')
-  var parts = url.split("/")
-  var second_part = parts[parts.length-2];
-  var last_part = parts[parts.length-1];
-  e.preventDefault();
-  let keyword = $('#searchData').val();
-  $.ajax({
-    url:"/petadata/"+second_part+"/"+last_part+"/search",
-    method:"GET",
-    data:{keyword:keyword},
-    success:function(res){
-      $('#output').html(res);
-    }
-  })
+  if(e.keyCode === 13){
+    $('#searchForm').submit();
+  }
+  return true
 });
